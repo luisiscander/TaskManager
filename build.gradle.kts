@@ -24,6 +24,10 @@ dependencies {
     implementation("io.ktor:ktor-server-status-pages:2.3.7")
     implementation("io.ktor:ktor-server-call-logging:2.3.7")
     
+    // Koin for Dependency Injection
+    implementation("io.insert-koin:koin-ktor:3.5.3")
+    implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
+    
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     
@@ -33,6 +37,7 @@ dependencies {
     // Testing
     testImplementation("io.ktor:ktor-server-test-host:2.3.7")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.22")
+    testImplementation("io.insert-koin:koin-test:3.5.3")
 }
 
 kotlin {

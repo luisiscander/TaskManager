@@ -9,14 +9,16 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
 
-fun Route.taskRoutes(
-    getAllTasksUseCase: GetAllTasksUseCase,
-    getTaskByIdUseCase: GetTaskByIdUseCase,
-    createTaskUseCase: CreateTaskUseCase,
-    updateTaskUseCase: UpdateTaskUseCase,
-    deleteTaskUseCase: DeleteTaskUseCase
-) {
+fun Route.taskRoutes() {
+    // Inyección de dependencias con Koin
+    val getAllTasksUseCase by inject<GetAllTasksUseCase>()
+    val getTaskByIdUseCase by inject<GetTaskByIdUseCase>()
+    val createTaskUseCase by inject<CreateTaskUseCase>()
+    val updateTaskUseCase by inject<UpdateTaskUseCase>()
+    val deleteTaskUseCase by inject<DeleteTaskUseCase>()
+    
     route("/api/tasks") {
         
         // GET /api/tasks - Obtener todas las tareas

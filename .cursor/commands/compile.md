@@ -1,0 +1,1 @@
+para compilar elproyeto usa : utiliza compileDebugKotlin revisa que no haya ningun error

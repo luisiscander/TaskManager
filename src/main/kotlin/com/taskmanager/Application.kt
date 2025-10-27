@@ -1,6 +1,6 @@
 package com.taskmanager
 
-import com.taskmanager.di.DependencyInjection
+import com.taskmanager.di.appModules
 import com.taskmanager.presentation.routes.taskRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
@@ -17,13 +17,23 @@ import io.ktor.server.routing.routing
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import kotlinx.serialization.json.Json
+import org.koin.ktor.plugin.Koin
+import org.koin.logger.slf4jLogger
 import org.slf4j.event.Level
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+        configureKoin()
         configurePlugins()
         configureRouting()
     }.start(wait = true)
+}
+
+fun Application.configureKoin() {
+    install(Koin) {
+        slf4jLogger()
+        modules(appModules)
+    }
 }
 
 fun Application.configurePlugins() {
@@ -58,17 +68,12 @@ fun Application.configureRouting() {
                 mapOf(
                     "status" to "running",
                     "service" to "Task Manager API",
-                    "version" to "1.0.0"
+                    "version" to "1.0.0",
+                    "di" to "Koin"
                 )
             )
         }
 
-        taskRoutes(
-            getAllTasksUseCase = DependencyInjection.getAllTasksUseCase,
-            getTaskByIdUseCase = DependencyInjection.getTaskByIdUseCase,
-            createTaskUseCase = DependencyInjection.createTaskUseCase,
-            updateTaskUseCase = DependencyInjection.updateTaskUseCase,
-            deleteTaskUseCase = DependencyInjection.deleteTaskUseCase
-        )
+        taskRoutes()
     }
 }
