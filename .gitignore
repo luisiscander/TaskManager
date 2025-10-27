@@ -35,6 +35,10 @@ bin/
 ### VS Code ###
 .vscode/
 
+### Cursor ###
+.cursor/
+CURSOR_COMPILE_COMMAND.md
+
 ### Mac OS ###
 .DS_Store
 
