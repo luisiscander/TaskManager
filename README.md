@@ -5,62 +5,62 @@
 [![Koin](https://img.shields.io/badge/Koin-3.5.3-green.svg)](https://insert-koin.io)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-API REST para gestión de tareas construida con **Ktor Server**, **Clean Architecture** y **Koin** para inyección de dependencias.
+A RESTful API for task management built with **Ktor Server**, **Clean Architecture**, and **Koin** for dependency injection.
 
 ---
 
-## ✨ Características
+## ✨ Features
 
-- ✅ **Clean Architecture** - Separación clara en capas (Domain, Data, Presentation)
-- ✅ **Koin DI** - Inyección de dependencias moderna y ligera
-- ✅ **REST API** - Endpoints completos para CRUD de tareas
-- ✅ **Kotlin Coroutines** - Programación asíncrona eficiente
-- ✅ **Serialización JSON** - Con Kotlinx Serialization
-- ✅ **Documentación Completa** - Guías y ejemplos detallados
+- ✅ **Clean Architecture** - Clear separation of concerns (Domain, Data, Presentation)
+- ✅ **Koin DI** - Modern and lightweight dependency injection
+- ✅ **REST API** - Complete CRUD endpoints for tasks
+- ✅ **Kotlin Coroutines** - Efficient asynchronous programming
+- ✅ **JSON Serialization** - With Kotlinx Serialization
+- ✅ **Comprehensive Documentation** - Detailed guides and examples
 
 ---
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
-Este proyecto implementa **Clean Architecture** con tres capas bien definidas:
+This project implements **Clean Architecture** with three well-defined layers:
 
-### 📦 Domain (Capa de Dominio)
-- **Entidades**: `Task` - Modelo de negocio puro
-- **Interfaces**: `TaskRepository` - Contratos para acceso a datos
-- **Use Cases**: Lógica de negocio encapsulada
+### 📦 Domain Layer
+- **Entities**: `Task` - Pure business model
+- **Interfaces**: `TaskRepository` - Data access contracts
+- **Use Cases**: Encapsulated business logic
   - `GetAllTasksUseCase`
   - `GetTaskByIdUseCase`
   - `CreateTaskUseCase`
   - `UpdateTaskUseCase`
   - `DeleteTaskUseCase`
 
-### 💾 Data (Capa de Datos)
-- **DataSource**: Abstracción de la fuente de datos (`TaskDataSourceImpl`)
-- **Repository**: Implementación del contrato (`TaskRepositoryImpl`)
-- **Storage**: Almacenamiento en memoria con `ConcurrentHashMap`
+### 💾 Data Layer
+- **DataSource**: Data source abstraction (`TaskDataSourceImpl`)
+- **Repository**: Contract implementation (`TaskRepositoryImpl`)
+- **Storage**: In-memory storage with `ConcurrentHashMap`
 
-### 🎯 Presentation (Capa de Presentación)
+### 🎯 Presentation Layer
 - **DTOs**: `TaskDto`, `TaskRequest`, `UpdateTaskRequest`
-- **Mappers**: Conversión entre entidades de dominio y DTOs
-- **Routes**: Endpoints REST (`TaskRoutes.kt`)
+- **Mappers**: Conversion between domain entities and DTOs
+- **Routes**: REST endpoints (`TaskRoutes.kt`)
 
 ### 🔧 Dependency Injection
-- **Koin Modules**: Organización modular por capas
-  - `DataModule` - Singletons para DataSource y Repository
-  - `DomainModule` - Factories para Use Cases
+- **Koin Modules**: Modular organization by layers
+  - `DataModule` - Singletons for DataSource and Repository
+  - `DomainModule` - Factories for Use Cases
 
-> 📚 Ver [ARCHITECTURE.md](ARCHITECTURE.md) para detalles completos
+> 📚 See [ARCHITECTURE.md](ARCHITECTURE.md) for complete details
 
 ---
 
-## 🚀 Tecnologías
+## 🚀 Technologies
 
-| Categoría | Tecnología | Versión |
+| Category | Technology | Version |
 |-----------|------------|---------|
-| **Lenguaje** | Kotlin | 1.9.22 |
+| **Language** | Kotlin | 1.9.22 |
 | **Framework** | Ktor Server | 2.3.7 |
 | **DI** | Koin | 3.5.3 |
-| **Serialización** | Kotlinx Serialization | 1.6.2 |
+| **Serialization** | Kotlinx Serialization | 1.6.2 |
 | **Logging** | Logback | 1.4.14 |
 | **Build Tool** | Gradle | 8.5 |
 
@@ -73,7 +73,7 @@ Este proyecto implementa **Clean Architecture** con tres capas bien definidas:
 GET /
 ```
 
-**Respuesta:**
+**Response:**
 ```json
 {
   "status": "running",
@@ -83,109 +83,109 @@ GET /
 }
 ```
 
-### 📝 Gestión de Tareas
+### 📝 Task Management
 
-| Método | Endpoint | Descripción |
+| Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/tasks` | Obtener todas las tareas |
-| `GET` | `/api/tasks/{id}` | Obtener tarea por ID |
-| `POST` | `/api/tasks` | Crear nueva tarea |
-| `PUT` | `/api/tasks/{id}` | Actualizar tarea |
-| `DELETE` | `/api/tasks/{id}` | Eliminar tarea |
+| `GET` | `/api/tasks` | Get all tasks |
+| `GET` | `/api/tasks/{id}` | Get task by ID |
+| `POST` | `/api/tasks` | Create new task |
+| `PUT` | `/api/tasks/{id}` | Update task |
+| `DELETE` | `/api/tasks/{id}` | Delete task |
 
-> 📚 Ver [API_EXAMPLES.md](API_EXAMPLES.md) para ejemplos completos con curl
+> 📚 See [API_EXAMPLES.md](API_EXAMPLES.md) for complete examples with curl
 
 ---
 
-## 🛠️ Instalación y Ejecución
+## 🛠️ Installation and Setup
 
-### Requisitos Previos
-- **JDK 17** o superior
-- **Git** (opcional)
+### Prerequisites
+- **JDK 17** or higher
+- **Git** (optional)
 
-### Clonar el Repositorio
+### Clone the Repository
 ```bash
-git clone https://github.com/tu-usuario/TaskManager.git
+git clone https://github.com/luisiscander/TaskManager.git
 cd TaskManager
 ```
 
-### Compilar el Proyecto
+### Build the Project
 ```bash
-# Opción 1: Comando estándar
+# Option 1: Standard command
 ./gradlew build
 
-# Opción 2: Script auto-detección
+# Option 2: Auto-detection script
 ./auto-compile.sh
 ```
 
-### Ejecutar el Servidor
+### Run the Server
 ```bash
 ./gradlew run
 ```
 
-El servidor se iniciará en: **http://localhost:8080**
+The server will start on: **http://localhost:8080**
 
-> 📚 Ver [COMPILE_GUIDE.md](COMPILE_GUIDE.md) para comandos de compilación detallados
+> 📚 See [COMPILE_GUIDE.md](COMPILE_GUIDE.md) for detailed compilation commands
 
 ---
 
-## 🧪 Ejemplos de Uso
+## 🧪 Usage Examples
 
-### Crear una Tarea
+### Create a Task
 ```bash
 curl -X POST http://localhost:8080/api/tasks \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Aprender Ktor",
-    "description": "Completar tutorial de Ktor Server",
+    "title": "Learn Ktor",
+    "description": "Complete Ktor Server tutorial",
     "isCompleted": false
   }'
 ```
 
-### Listar Todas las Tareas
+### List All Tasks
 ```bash
 curl http://localhost:8080/api/tasks
 ```
 
-### Obtener Tarea por ID
+### Get Task by ID
 ```bash
 curl http://localhost:8080/api/tasks/{id}
 ```
 
-### Actualizar una Tarea
+### Update a Task
 ```bash
 curl -X PUT http://localhost:8080/api/tasks/{id} \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Ktor completado",
-    "description": "Tutorial finalizado con éxito",
+    "title": "Ktor completed",
+    "description": "Tutorial successfully finished",
     "isCompleted": true
   }'
 ```
 
-### Eliminar una Tarea
+### Delete a Task
 ```bash
 curl -X DELETE http://localhost:8080/api/tasks/{id}
 ```
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 TaskManager/
 ├── src/main/kotlin/com/taskmanager/
-│   ├── Application.kt                      # Punto de entrada
+│   ├── Application.kt                      # Entry point
 │   ├── data/
 │   │   ├── datasource/
 │   │   │   ├── TaskDataSource.kt          # Interface
-│   │   │   └── TaskDataSourceImpl.kt      # Implementación
+│   │   │   └── TaskDataSourceImpl.kt      # Implementation
 │   │   └── repository/
 │   │       ├── TaskRepository.kt          # Interface
-│   │       └── TaskRepositoryImpl.kt      # Implementación
+│   │       └── TaskRepositoryImpl.kt      # Implementation
 │   ├── domain/
 │   │   ├── model/
-│   │   │   └── Task.kt                    # Entidad
+│   │   │   └── Task.kt                    # Entity
 │   │   └── usecase/
 │   │       ├── GetAllTasksUseCase.kt
 │   │       ├── GetTaskByIdUseCase.kt
@@ -200,64 +200,64 @@ TaskManager/
 │   │   ├── mapper/
 │   │   │   └── TaskMapper.kt
 │   │   └── routes/
-│   │       └── TaskRoutes.kt              # Endpoints REST
+│   │       └── TaskRoutes.kt              # REST Endpoints
 │   └── di/
-│       ├── DataModule.kt                  # Módulo Koin Data
-│       ├── DomainModule.kt                # Módulo Koin Domain
-│       └── KoinModules.kt                 # Configuración Koin
+│       ├── DataModule.kt                  # Koin Data Module
+│       ├── DomainModule.kt                # Koin Domain Module
+│       └── KoinModules.kt                 # Koin Configuration
 ├── src/main/resources/
-│   └── logback.xml                        # Configuración logging
-├── build.gradle.kts                       # Configuración Gradle
+│   └── logback.xml                        # Logging configuration
+├── build.gradle.kts                       # Gradle configuration
 ├── settings.gradle.kts
 └── README.md
 ```
 
 ---
 
-## 📚 Documentación
+## 📚 Documentation
 
-| Documento | Descripción |
+| Document | Description |
 |-----------|-------------|
-| [API_EXAMPLES.md](API_EXAMPLES.md) | Ejemplos completos de uso de la API |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Detalles de Clean Architecture |
-| [KOIN_DI.md](KOIN_DI.md) | Guía de Koin y DI |
-| [MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md) | Resumen de migración a Koin |
-| [COMPILE_GUIDE.md](COMPILE_GUIDE.md) | Guía de compilación por tipo de proyecto |
-| [COMPILE_COMMANDS.md](COMPILE_COMMANDS.md) | Referencia rápida de comandos |
+| [API_EXAMPLES.md](API_EXAMPLES.md) | Complete API usage examples |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Clean Architecture details |
+| [KOIN_DI.md](KOIN_DI.md) | Koin and DI guide |
+| [MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md) | Migration summary to Koin |
+| [COMPILE_GUIDE.md](COMPILE_GUIDE.md) | Compilation guide by project type |
+| [COMPILE_COMMANDS.md](COMPILE_COMMANDS.md) | Quick command reference |
 
 ---
 
-## 🔧 Configuración de Koin
+## 🔧 Koin Configuration
 
-Este proyecto usa **Koin** para inyección de dependencias:
+This project uses **Koin** for dependency injection:
 
 ```kotlin
-// Configuración en Application.kt
+// Configuration in Application.kt
 install(Koin) {
     slf4jLogger()
     modules(appModules)
 }
 
-// Inyección en rutas
+// Injection in routes
 fun Route.taskRoutes() {
     val getAllTasksUseCase by inject<GetAllTasksUseCase>()
     val createTaskUseCase by inject<CreateTaskUseCase>()
-    // ... uso automático
+    // ... automatic usage
 }
 ```
 
-> 📚 Ver [KOIN_DI.md](KOIN_DI.md) para documentación completa de Koin
+> 📚 See [KOIN_DI.md](KOIN_DI.md) for complete Koin documentation
 
 ---
 
 ## 🧪 Testing
 
-### Ejecutar Tests
+### Run Tests
 ```bash
 ./gradlew test
 ```
 
-### Estructura de Tests (Próximamente)
+### Test Structure (Coming Soon)
 ```kotlin
 class TaskRepositoryTest : KoinTest {
     private val repository by inject<TaskRepository>()
@@ -271,19 +271,19 @@ class TaskRepositoryTest : KoinTest {
 
 ---
 
-## 🚀 Despliegue
+## 🚀 Deployment
 
-### Build para Producción
+### Build for Production
 ```bash
 ./gradlew build
 ```
 
-### Ejecutar JAR
+### Run JAR
 ```bash
 java -jar build/libs/TaskManager-1.0.0.jar
 ```
 
-### Docker (Próximamente)
+### Docker (Coming Soon)
 ```dockerfile
 FROM openjdk:17-jdk-slim
 COPY build/libs/TaskManager-1.0.0.jar app.jar
@@ -293,63 +293,55 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 ---
 
-## 🤝 Contribuciones
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas! Por favor:
+Contributions are welcome! Please:
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/amazing-feature`)
-3. Commit tus cambios (`git commit -m 'Add amazing feature'`)
-4. Push a la rama (`git push origin feature/amazing-feature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
 ## 📝 Roadmap
 
-- [ ] Tests unitarios con Koin Test
-- [ ] Tests de integración con Ktor Test
-- [ ] Persistencia con base de datos (PostgreSQL/MongoDB)
-- [ ] Autenticación JWT
-- [ ] Documentación OpenAPI/Swagger
-- [ ] Docker y Docker Compose
-- [ ] CI/CD con GitHub Actions
-- [ ] Métricas y monitoring
+- [ ] Unit tests with Koin Test
+- [ ] Integration tests with Ktor Test
+- [ ] Database persistence (PostgreSQL/MongoDB)
+- [ ] JWT Authentication
+- [ ] OpenAPI/Swagger documentation
+- [ ] Docker and Docker Compose
+- [ ] CI/CD with GitHub Actions
+- [ ] Metrics and monitoring
 
 ---
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
 **Luis O.**
 
 ---
 
-## 🙏 Agradecimientos
+## 📞 Support
 
-- [Ktor Framework](https://ktor.io/) - Framework web asíncrono
-- [Koin](https://insert-koin.io/) - Framework de DI ligero
-- [Kotlin](https://kotlinlang.org/) - Lenguaje de programación moderno
-
----
-
-## 📞 Soporte
-
-Si tienes preguntas o problemas:
-- 📧 Email: [tu-email@example.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/tu-usuario/TaskManager/issues)
+If you have questions or issues:
+- 📧 Email: [your-email@example.com]
+- 🐛 Issues: [GitHub Issues](https://github.com/luisiscander/TaskManager/issues)
 
 ---
 
 <div align="center">
 
-**⭐ Si te gusta este proyecto, dale una estrella en GitHub! ⭐**
+**⭐ If you like this project, give it a star on GitHub! ⭐**
 
-Hecho con ❤️ usando Kotlin y Ktor
+Made with ❤️ using Kotlin and Ktor
 
 </div>
