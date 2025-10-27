@@ -1,16 +1,16 @@
-# Ejemplos de API REST - Task Manager
+# REST API Examples - Task Manager
 
-## 🚀 Iniciar el servidor
+## 🚀 Start the Server
 
 ```bash
 ./gradlew run
 ```
 
-El servidor se iniciará en: `http://localhost:8080`
+The server will start at: `http://localhost:8080`
 
 ---
 
-## 📋 Endpoints y Ejemplos
+## 📋 Endpoints and Examples
 
 ### 1️⃣ Health Check
 
@@ -18,7 +18,7 @@ El servidor se iniciará en: `http://localhost:8080`
 curl http://localhost:8080/
 ```
 
-**Respuesta:**
+**Response:**
 ```json
 {
   "status": "running",
@@ -29,24 +29,24 @@ curl http://localhost:8080/
 
 ---
 
-### 2️⃣ Crear una Tarea (POST)
+### 2️⃣ Create a Task (POST)
 
 ```bash
 curl -X POST http://localhost:8080/api/tasks \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Aprender Ktor",
-    "description": "Completar tutorial de Ktor Server",
+    "title": "Learn Ktor",
+    "description": "Complete Ktor Server tutorial",
     "isCompleted": false
   }'
 ```
 
-**Respuesta (201 Created):**
+**Response (201 Created):**
 ```json
 {
   "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "title": "Aprender Ktor",
-  "description": "Completar tutorial de Ktor Server",
+  "title": "Learn Ktor",
+  "description": "Complete Ktor Server tutorial",
   "isCompleted": false,
   "createdAt": 1698765432000
 }
@@ -54,26 +54,26 @@ curl -X POST http://localhost:8080/api/tasks \
 
 ---
 
-### 3️⃣ Obtener Todas las Tareas (GET)
+### 3️⃣ Get All Tasks (GET)
 
 ```bash
 curl http://localhost:8080/api/tasks
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 ```json
 [
   {
     "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "title": "Aprender Ktor",
-    "description": "Completar tutorial de Ktor Server",
+    "title": "Learn Ktor",
+    "description": "Complete Ktor Server tutorial",
     "isCompleted": false,
     "createdAt": 1698765432000
   },
   {
     "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
-    "title": "Implementar Clean Architecture",
-    "description": "Separar capas: Data, Domain, Presentation",
+    "title": "Implement Clean Architecture",
+    "description": "Separate layers: Data, Domain, Presentation",
     "isCompleted": true,
     "createdAt": 1698765433000
   }
@@ -82,171 +82,171 @@ curl http://localhost:8080/api/tasks
 
 ---
 
-### 4️⃣ Obtener una Tarea por ID (GET)
+### 4️⃣ Get Task by ID (GET)
 
 ```bash
 curl http://localhost:8080/api/tasks/a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 ```json
 {
   "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "title": "Aprender Ktor",
-  "description": "Completar tutorial de Ktor Server",
+  "title": "Learn Ktor",
+  "description": "Complete Ktor Server tutorial",
   "isCompleted": false,
   "createdAt": 1698765432000
 }
 ```
 
-**Respuesta Error (404 Not Found):**
+**Error Response (404 Not Found):**
 ```json
 {
-  "error": "Tarea no encontrada"
+  "error": "Task not found"
 }
 ```
 
 ---
 
-### 5️⃣ Actualizar una Tarea (PUT)
+### 5️⃣ Update a Task (PUT)
 
 ```bash
 curl -X PUT http://localhost:8080/api/tasks/a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Aprender Ktor - COMPLETADO",
-    "description": "Tutorial de Ktor Server completado con éxito",
+    "title": "Learn Ktor - COMPLETED",
+    "description": "Ktor Server tutorial successfully completed",
     "isCompleted": true
   }'
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 ```json
 {
   "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "title": "Aprender Ktor - COMPLETADO",
-  "description": "Tutorial de Ktor Server completado con éxito",
+  "title": "Learn Ktor - COMPLETED",
+  "description": "Ktor Server tutorial successfully completed",
   "isCompleted": true,
   "createdAt": 1698765432000
 }
 ```
 
-**Respuesta Error (404 Not Found):**
+**Error Response (404 Not Found):**
 ```json
 {
-  "error": "Tarea no encontrada"
+  "error": "Task not found"
 }
 ```
 
 ---
 
-### 6️⃣ Eliminar una Tarea (DELETE)
+### 6️⃣ Delete a Task (DELETE)
 
 ```bash
 curl -X DELETE http://localhost:8080/api/tasks/a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
-**Respuesta (200 OK):**
+**Response (200 OK):**
 ```json
 {
-  "message": "Tarea eliminada exitosamente"
+  "message": "Task deleted successfully"
 }
 ```
 
-**Respuesta Error (404 Not Found):**
+**Error Response (404 Not Found):**
 ```json
 {
-  "error": "Tarea no encontrada"
+  "error": "Task not found"
 }
 ```
 
 ---
 
-## 🧪 Prueba Completa del CRUD
+## 🧪 Complete CRUD Test
 
-### Script de prueba completo:
+### Full test script:
 
 ```bash
-# 1. Verificar que el servidor está corriendo
+# 1. Check server is running
 curl http://localhost:8080/
 
-# 2. Crear primera tarea
+# 2. Create first task
 TASK1=$(curl -s -X POST http://localhost:8080/api/tasks \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Tarea 1",
-    "description": "Primera tarea de prueba",
+    "title": "Task 1",
+    "description": "First test task",
     "isCompleted": false
   }')
 
-echo "Tarea creada: $TASK1"
+echo "Task created: $TASK1"
 
-# 3. Extraer el ID de la tarea (requiere jq)
+# 3. Extract task ID (requires jq)
 # TASK1_ID=$(echo $TASK1 | jq -r '.id')
 
-# 4. Crear segunda tarea
+# 4. Create second task
 curl -X POST http://localhost:8080/api/tasks \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "Tarea 2",
-    "description": "Segunda tarea de prueba",
+    "title": "Task 2",
+    "description": "Second test task",
     "isCompleted": false
   }'
 
-# 5. Listar todas las tareas
-echo -e "\n\n=== Todas las tareas ==="
+# 5. List all tasks
+echo -e "\n\n=== All tasks ==="
 curl http://localhost:8080/api/tasks
 
-# 6. Actualizar tarea (reemplaza el ID con el real)
+# 6. Update task (replace ID with real one)
 # curl -X PUT http://localhost:8080/api/tasks/$TASK1_ID \
 #   -H "Content-Type: application/json" \
 #   -d '{
-#     "title": "Tarea 1 - Actualizada",
-#     "description": "Tarea actualizada",
+#     "title": "Task 1 - Updated",
+#     "description": "Updated task",
 #     "isCompleted": true
 #   }'
 
-# 7. Eliminar tarea (reemplaza el ID con el real)
+# 7. Delete task (replace ID with real one)
 # curl -X DELETE http://localhost:8080/api/tasks/$TASK1_ID
 ```
 
 ---
 
-## 🐛 Códigos de Respuesta HTTP
+## 🐛 HTTP Response Codes
 
-| Código | Descripción |
-|--------|-------------|
-| 200 OK | Operación exitosa |
-| 201 Created | Recurso creado exitosamente |
-| 400 Bad Request | Solicitud mal formada o datos inválidos |
-| 404 Not Found | Recurso no encontrado |
-| 500 Internal Server Error | Error interno del servidor |
-
----
-
-## 🔧 Herramientas Recomendadas
-
-- **cURL**: Cliente HTTP de línea de comandos (incluido en este documento)
-- **Postman**: Cliente HTTP con interfaz gráfica
-- **HTTPie**: Cliente HTTP amigable para terminal (`http` comando)
-- **Thunder Client**: Extensión de VS Code
-- **REST Client**: Extensión de VS Code
+| Code | Description |
+|------|-------------|
+| 200 OK | Successful operation |
+| 201 Created | Resource created successfully |
+| 400 Bad Request | Malformed request or invalid data |
+| 404 Not Found | Resource not found |
+| 500 Internal Server Error | Internal server error |
 
 ---
 
-## 📱 Ejemplo con HTTPie
+## 🔧 Recommended Tools
 
-Si prefieres usar HTTPie (más legible):
+- **cURL**: Command-line HTTP client (included in this document)
+- **Postman**: HTTP client with GUI
+- **HTTPie**: User-friendly HTTP client for terminal (`http` command)
+- **Thunder Client**: VS Code extension
+- **REST Client**: VS Code extension
+
+---
+
+## 📱 Example with HTTPie
+
+If you prefer HTTPie (more readable):
 
 ```bash
 # GET
 http GET :8080/api/tasks
 
 # POST
-http POST :8080/api/tasks title="Nueva tarea" description="Descripción" isCompleted:=false
+http POST :8080/api/tasks title="New task" description="Description" isCompleted:=false
 
 # PUT
-http PUT :8080/api/tasks/ID title="Actualizada" description="Nueva descripción" isCompleted:=true
+http PUT :8080/api/tasks/ID title="Updated" description="New description" isCompleted:=true
 
 # DELETE
 http DELETE :8080/api/tasks/ID
@@ -254,10 +254,9 @@ http DELETE :8080/api/tasks/ID
 
 ---
 
-## 🎯 Validaciones Implementadas
+## 🎯 Implemented Validations
 
-- ✅ El campo `title` no puede estar vacío
-- ✅ Validación de existencia de tarea antes de actualizar/eliminar
-- ✅ Manejo de errores con mensajes descriptivos
-- ✅ Validación de formato JSON en requests
-
+- ✅ `title` field cannot be empty
+- ✅ Task existence validation before update/delete
+- ✅ Error handling with descriptive messages
+- ✅ JSON format validation in requests

@@ -1,67 +1,67 @@
-# 🏗️ Arquitectura del Proyecto
+# 🏗️ Project Architecture
 
-## Clean Architecture - Capas
+## Clean Architecture - Layers
 
-Este proyecto sigue los principios de **Clean Architecture** con tres capas claramente definidas:
+This project follows **Clean Architecture** principles with three clearly defined layers:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                      PRESENTATION                           │
-│  (Capa de Presentación - API REST)                         │
+│  (Presentation Layer - REST API)                           │
 │                                                             │
-│  • TaskRoutes.kt        - Endpoints REST                   │
-│  • TaskDto.kt           - DTOs de respuesta                │
-│  • CreateTaskRequest    - DTO de creación                  │
-│  • UpdateTaskRequest    - DTO de actualización             │
-│  • TaskMapper.kt        - Conversión Domain ↔ DTO          │
+│  • TaskRoutes.kt        - REST Endpoints                   │
+│  • TaskDto.kt           - Response DTOs                    │
+│  • CreateTaskRequest    - Creation DTO                     │
+│  • UpdateTaskRequest    - Update DTO                       │
+│  • TaskMapper.kt        - Domain ↔ DTO Conversion          │
 │                                                             │
 └──────────────────┬──────────────────────────────────────────┘
-                   │ Dependencia
+                   │ Dependency
                    ↓
 ┌─────────────────────────────────────────────────────────────┐
 │                        DOMAIN                               │
-│  (Capa de Dominio - Lógica de Negocio)                    │
+│  (Domain Layer - Business Logic)                           │
 │                                                             │
-│  • Task.kt              - Entidad del dominio              │
-│  • TaskRepository.kt    - Interface del repositorio        │
-│  • GetAllTasksUseCase   - Caso de uso: Listar             │
-│  • GetTaskByIdUseCase   - Caso de uso: Obtener por ID     │
-│  • CreateTaskUseCase    - Caso de uso: Crear              │
-│  • UpdateTaskUseCase    - Caso de uso: Actualizar         │
-│  • DeleteTaskUseCase    - Caso de uso: Eliminar           │
+│  • Task.kt              - Domain Entity                    │
+│  • TaskRepository.kt    - Repository Interface             │
+│  • GetAllTasksUseCase   - Use Case: List all              │
+│  • GetTaskByIdUseCase   - Use Case: Get by ID             │
+│  • CreateTaskUseCase    - Use Case: Create                │
+│  • UpdateTaskUseCase    - Use Case: Update                │
+│  • DeleteTaskUseCase    - Use Case: Delete                │
 │                                                             │
 └──────────────────┬──────────────────────────────────────────┘
-                   │ Dependencia
+                   │ Dependency
                    ↓
 ┌─────────────────────────────────────────────────────────────┐
 │                         DATA                                │
-│  (Capa de Datos - Acceso a Datos)                         │
+│  (Data Layer - Data Access)                                │
 │                                                             │
-│  • TaskRepositoryImpl.kt     - Implementación repo         │
-│  • TaskDataSource.kt         - Interface de datos          │
-│  • InMemoryTaskDataSource    - Almacenamiento en memoria   │
+│  • TaskRepositoryImpl.kt     - Repository Implementation   │
+│  • TaskDataSource.kt         - Data Interface              │
+│  • InMemoryTaskDataSource    - In-memory Storage           │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📊 Flujo de Datos
+## 📊 Data Flow
 
-### Ejemplo: Crear una Tarea
+### Example: Create a Task
 
 ```
 1. CLIENT (cURL/Postman)
    │
    │ POST /api/tasks
-   │ { "title": "Nueva tarea", "description": "...", ... }
+   │ { "title": "New task", "description": "...", ... }
    │
    ↓
 2. PRESENTATION Layer
    │
    ├─ TaskRoutes.kt
-   │  └─ Recibe CreateTaskRequest
-   │     └─ Valida datos
+   │  └─ Receives CreateTaskRequest
+   │     └─ Validates data
    │        └─ TaskMapper.toDomain()
    │
    ↓
@@ -78,10 +78,10 @@ Este proyecto sigue los principios de **Clean Architecture** con tres capas clar
    │  └─ createTask(task: Task)
    │     └─ TaskDataSource.insertTask()
    │        └─ InMemoryTaskDataSource
-   │           └─ Guarda en ConcurrentHashMap
+   │           └─ Saves to ConcurrentHashMap
    │
    ↓
-5. Response (flujo inverso)
+5. Response (reverse flow)
    │
    │ Task (Domain) → TaskDto (Presentation)
    │
@@ -89,35 +89,35 @@ Este proyecto sigue los principios de **Clean Architecture** con tres capas clar
 6. CLIENT
    │
    │ 201 Created
-   │ { "id": "...", "title": "Nueva tarea", ... }
+   │ { "id": "...", "title": "New task", ... }
 ```
 
 ---
 
-## 🎯 Principios Aplicados
+## 🎯 Applied Principles
 
-### 1. **Separación de Responsabilidades**
-- **Presentation**: Solo maneja HTTP y conversión de DTOs
-- **Domain**: Solo lógica de negocio pura
-- **Data**: Solo acceso a datos
+### 1. **Separation of Concerns**
+- **Presentation**: Only handles HTTP and DTO conversion
+- **Domain**: Only pure business logic
+- **Data**: Only data access
 
 ### 2. **Dependency Inversion**
-- Las capas superiores dependen de abstracciones (interfaces)
-- Las capas inferiores implementan esas abstracciones
-- **Domain** define `TaskRepository` interface
-- **Data** implementa `TaskRepositoryImpl`
+- Upper layers depend on abstractions (interfaces)
+- Lower layers implement those abstractions
+- **Domain** defines `TaskRepository` interface
+- **Data** implements `TaskRepositoryImpl`
 
 ### 3. **Single Responsibility**
-- Cada caso de uso tiene una responsabilidad única
-- Cada clase tiene un propósito claro
+- Each use case has a single responsibility
+- Each class has a clear purpose
 
 ### 4. **Open/Closed Principle**
-- Fácil extender con nuevos casos de uso
-- No necesitas modificar código existente
+- Easy to extend with new use cases
+- No need to modify existing code
 
 ---
 
-## 🔧 Inyección de Dependencias
+## 🔧 Dependency Injection
 
 ```kotlin
 // di/DependencyInjection.kt
@@ -138,45 +138,45 @@ object DependencyInjection {
     val getAllTasksUseCase by lazy {
         GetAllTasksUseCase(taskRepository)
     }
-    // ... otros use cases
+    // ... other use cases
 }
 ```
 
-**Ventajas:**
-- ✅ Singleton pattern para componentes globales
-- ✅ Lazy initialization (solo se crea cuando se usa)
-- ✅ Fácil de cambiar implementaciones (ej: de InMemory a Database)
+**Advantages:**
+- ✅ Singleton pattern for global components
+- ✅ Lazy initialization (only created when used)
+- ✅ Easy to change implementations (e.g., from InMemory to Database)
 
 ---
 
-## 🔄 Cómo Extender el Proyecto
+## 🔄 How to Extend the Project
 
-### Agregar persistencia con Base de Datos
+### Add Database Persistence
 
-1. **Crear nueva implementación de DataSource:**
+1. **Create new DataSource implementation:**
 ```kotlin
 class DatabaseTaskDataSource : TaskDataSource {
-    // Implementar con Room, Exposed, etc.
+    // Implement with Room, Exposed, etc.
 }
 ```
 
-2. **Actualizar DependencyInjection:**
+2. **Update DependencyInjection:**
 ```kotlin
 private val taskDataSource: TaskDataSource by lazy {
-    DatabaseTaskDataSource() // Cambio simple!
+    DatabaseTaskDataSource() // Simple change!
 }
 ```
 
-3. **No es necesario cambiar nada más** ✨
-   - Domain permanece igual
-   - Presentation permanece igual
-   - Solo cambias la implementación de Data
+3. **No other changes needed** ✨
+   - Domain remains the same
+   - Presentation remains the same
+   - Only change Data implementation
 
 ---
 
-### Agregar nuevo caso de uso
+### Add New Use Case
 
-1. **Crear en Domain:**
+1. **Create in Domain:**
 ```kotlin
 class ToggleTaskCompletionUseCase(
     private val repository: TaskRepository
@@ -190,14 +190,14 @@ class ToggleTaskCompletionUseCase(
 }
 ```
 
-2. **Registrar en DI:**
+2. **Register in DI:**
 ```kotlin
 val toggleTaskUseCase by lazy {
     ToggleTaskCompletionUseCase(taskRepository)
 }
 ```
 
-3. **Agregar endpoint en Presentation:**
+3. **Add endpoint in Presentation:**
 ```kotlin
 patch("/{id}/toggle") {
     val id = call.parameters["id"] ?: return@patch ...
@@ -208,111 +208,110 @@ patch("/{id}/toggle") {
 
 ---
 
-## 📦 Estructura de Archivos
+## 📦 File Structure
 
 ```
 src/main/kotlin/com/taskmanager/
 │
-├── Application.kt              # Punto de entrada, configuración Ktor
+├── Application.kt              # Entry point, Ktor configuration
 │
 ├── di/
-│   └── DependencyInjection.kt  # Container de dependencias
+│   └── DependencyInjection.kt  # Dependency container
 │
-├── presentation/               # 🎨 Capa de Presentación
+├── presentation/               # 🎨 Presentation Layer
 │   ├── dto/                    # Data Transfer Objects
 │   │   ├── TaskDto.kt
 │   │   ├── CreateTaskRequest.kt
 │   │   └── UpdateTaskRequest.kt
-│   ├── mapper/                 # Conversión Domain ↔ DTO
+│   ├── mapper/                 # Domain ↔ DTO Conversion
 │   │   └── TaskMapper.kt
-│   └── routes/                 # Endpoints REST
+│   └── routes/                 # REST Endpoints
 │       └── TaskRoutes.kt
 │
-├── domain/                     # 🎯 Capa de Dominio
-│   ├── model/                  # Entidades
+├── domain/                     # 🎯 Domain Layer
+│   ├── model/                  # Entities
 │   │   └── Task.kt
-│   ├── repository/             # Contratos
+│   ├── repository/             # Contracts
 │   │   └── TaskRepository.kt
-│   └── usecase/                # Lógica de negocio
+│   └── usecase/                # Business Logic
 │       ├── GetAllTasksUseCase.kt
 │       ├── GetTaskByIdUseCase.kt
 │       ├── CreateTaskUseCase.kt
 │       ├── UpdateTaskUseCase.kt
 │       └── DeleteTaskUseCase.kt
 │
-└── data/                       # 💾 Capa de Datos
-    ├── datasource/             # Fuente de datos
+└── data/                       # 💾 Data Layer
+    ├── datasource/             # Data Source
     │   ├── TaskDataSource.kt
     │   └── InMemoryTaskDataSource.kt
-    └── repository/             # Implementación del repositorio
+    └── repository/             # Repository Implementation
         └── TaskRepositoryImpl.kt
 ```
 
 ---
 
-## 🎨 Ventajas de esta Arquitectura
+## 🎨 Advantages of This Architecture
 
-### ✅ Testabilidad
-- Cada capa se puede testear independientemente
-- Fácil crear mocks de interfaces
+### ✅ Testability
+- Each layer can be tested independently
+- Easy to create mocks of interfaces
 
-### ✅ Mantenibilidad
-- Código organizado y predecible
-- Fácil encontrar dónde hacer cambios
+### ✅ Maintainability
+- Organized and predictable code
+- Easy to find where to make changes
 
-### ✅ Escalabilidad
-- Fácil agregar nuevas features
-- Puede crecer sin volverse caótico
+### ✅ Scalability
+- Easy to add new features
+- Can grow without becoming chaotic
 
-### ✅ Flexibilidad
-- Cambiar la fuente de datos sin tocar lógica de negocio
-- Cambiar el framework web sin tocar el dominio
+### ✅ Flexibility
+- Change data source without touching business logic
+- Change web framework without touching domain
 
-### ✅ Reutilización
-- Los use cases pueden ser usados por diferentes presentaciones
-- Podrías agregar GraphQL, WebSockets, CLI, etc.
+### ✅ Reusability
+- Use cases can be used by different presentations
+- Could add GraphQL, WebSockets, CLI, etc.
 
 ---
 
-## 🚀 Próximos Pasos Recomendados
+## 🚀 Recommended Next Steps
 
-1. **Agregar Tests Unitarios**
+1. **Add Unit Tests**
    ```kotlin
    class CreateTaskUseCaseTest {
        @Test
        fun `should create task successfully`() {
-           // Test con mock repository
+           // Test with mock repository
        }
    }
    ```
 
-2. **Agregar Persistencia Real**
+2. **Add Real Persistence**
    - Exposed (SQL)
    - MongoDB
    - Room (Android)
 
-3. **Agregar Validación**
-   - Librería de validación
-   - DTOs con validaciones
+3. **Add Validation**
+   - Validation library
+   - DTOs with validations
 
-4. **Agregar Autenticación**
+4. **Add Authentication**
    - JWT tokens
    - OAuth2
 
-5. **Agregar Documentación API**
+5. **Add API Documentation**
    - OpenAPI/Swagger
    - Ktor OpenAPI plugin
 
-6. **Agregar Logging y Monitoring**
+6. **Add Logging and Monitoring**
    - Structured logging
-   - Metrics con Micrometer
+   - Metrics with Micrometer
 
 ---
 
-## 📚 Recursos y Referencias
+## 📚 Resources and References
 
 - [Clean Architecture - Uncle Bob](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Ktor Documentation](https://ktor.io/docs/)
 - [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
 - [Dependency Inversion Principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle)
-

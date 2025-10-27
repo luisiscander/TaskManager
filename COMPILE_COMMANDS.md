@@ -1,34 +1,33 @@
-# 🚀 Comandos de Compilación - Referencia Rápida
+# 🚀 Compilation Commands - Quick Reference
 
-## 📱 FRONTEND (Android - Móvil)
+## 📱 FRONTEND (Android - Mobile)
 ```bash
-./gradlew compileDebugKotlin      # Compilar versión debug
-./gradlew compileReleaseKotlin    # Compilar versión release
-./gradlew assembleDebug            # Build completo debug
+./gradlew compileDebugKotlin      # Compile debug version
+./gradlew compileReleaseKotlin    # Compile release version
+./gradlew assembleDebug            # Full debug build
 ```
 
-## 🖥️ BACKEND (Ktor/Spring - Servidor)
+## 🖥️ BACKEND (Ktor/Spring - Server)
 ```bash
-./gradlew compileKotlin           # Compilar Kotlin
-./gradlew build                   # Build completo
-./gradlew run                     # Ejecutar servidor
+./gradlew compileKotlin           # Compile Kotlin
+./gradlew build                   # Full build
+./gradlew run                     # Run server
 ```
 
 ## ⚛️ FRONTEND (React/Node - Web)
 ```bash
-npm run build                     # Build producción
-npm run dev                       # Ejecutar desarrollo
-npm run lint                      # Verificar errores
+npm run build                     # Production build
+npm run dev                       # Run development
+npm run lint                      # Check errors
 ```
 
 ---
 
-## ✅ Para ESTE Proyecto (TaskManager - Ktor Backend):
+## ✅ For THIS Project (TaskManager - Ktor Backend):
 ```bash
-./gradlew compileKotlin           # ⭐ Compilar
-./gradlew build                   # ⭐ Build completo
-./gradlew run                     # ⭐ Ejecutar
+./gradlew compileKotlin           # ⭐ Compile
+./gradlew build                   # ⭐ Full build
+./gradlew run                     # ⭐ Run
 ```
 
-Ver guía completa en [COMPILE_GUIDE.md](./COMPILE_GUIDE.md)
-
+See complete guide in [COMPILE_GUIDE.md](./COMPILE_GUIDE.md) (if available)
