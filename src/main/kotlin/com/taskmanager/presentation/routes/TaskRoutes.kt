@@ -27,7 +27,7 @@ fun Route.taskRoutes() {
             call.respond(HttpStatusCode.OK, tasks.map { it.toDto() })
         }
         
-        // GET /api/tasks/{id} - Obtener tarea por ID
+        // GET /api/tasks/{id}
         get("/{id}") {
             val id = call.parameters["id"] ?: return@get call.respond(
                 HttpStatusCode.BadRequest,
@@ -45,7 +45,7 @@ fun Route.taskRoutes() {
             }
         }
         
-        // POST /api/tasks - Crear nueva tarea
+
         post {
             try {
                 val request = call.receive<TaskRequest>()
