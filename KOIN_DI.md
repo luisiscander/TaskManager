@@ -1,57 +1,57 @@
-# 🔧 Inyección de Dependencias con Koin
+# 🔧 Dependency Injection with Koin
 
-Este proyecto utiliza **Koin** como framework de inyección de dependencias para mantener un código limpio, desacoplado y fácil de testear.
-
----
-
-## 📚 ¿Qué es Koin?
-
-**Koin** es un framework de inyección de dependencias ligero para Kotlin que:
-- ✅ Usa DSL idiomático de Kotlin
-- ✅ No requiere generación de código (runtime DI)
-- ✅ Es fácil de configurar y usar
-- ✅ Perfecto para proyectos Ktor/Backend
-- ✅ Soporta scopes y cualificadores
-- ✅ Integración nativa con Ktor
+This project uses **Koin** as a dependency injection framework to maintain clean, decoupled, and testable code.
 
 ---
 
-## 🏗️ Estructura de Módulos
+## 📚 What is Koin?
 
-### 📁 Organización de Módulos
+**Koin** is a lightweight dependency injection framework for Kotlin that:
+- ✅ Uses idiomatic Kotlin DSL
+- ✅ Doesn't require code generation (runtime DI)
+- ✅ Is easy to configure and use
+- ✅ Perfect for Ktor/Backend projects
+- ✅ Supports scopes and qualifiers
+- ✅ Native integration with Ktor
+
+---
+
+## 🏗️ Module Structure
+
+### 📁 Module Organization
 
 ```
 di/
-├── DataModule.kt       # Módulo de capa de datos
-├── DomainModule.kt     # Módulo de capa de dominio
-└── KoinModules.kt      # Lista centralizada de módulos
+├── DataModule.kt       # Data layer module
+├── DomainModule.kt     # Domain layer module
+└── KoinModules.kt      # Centralized module list
 ```
 
 ### 1️⃣ DataModule.kt
 
 ```kotlin
 val dataModule = module {
-    // Singleton: Una única instancia compartida
+    // Singleton: Single shared instance
     single<TaskDataSource> {
         TaskDataSourceImpl()
     }
     
     single<TaskRepository> {
-        TaskRepositoryImpl(get())  // get() inyecta TaskDataSource
+        TaskRepositoryImpl(get())  // get() injects TaskDataSource
     }
 }
 ```
 
-**Características:**
-- `single`: Define un singleton (una sola instancia)
-- `get()`: Obtiene una dependencia registrada
-- Interfaces para mejor abstracción
+**Features:**
+- `single`: Defines a singleton (single instance)
+- `get()`: Gets a registered dependency
+- Interfaces for better abstraction
 
 ### 2️⃣ DomainModule.kt
 
 ```kotlin
 val domainModule = module {
-    // Factory: Nueva instancia cada vez
+    // Factory: New instance each time
     factory {
         GetAllTasksUseCase(get())
     }
@@ -60,13 +60,13 @@ val domainModule = module {
         CreateTaskUseCase(get())
     }
     
-    // ... otros use cases
+    // ... other use cases
 }
 ```
 
-**Características:**
-- `factory`: Crea nueva instancia en cada inyección
-- Ideal para use cases (ligeros y sin estado)
+**Features:**
+- `factory`: Creates new instance on each injection
+- Ideal for use cases (lightweight and stateless)
 
 ### 3️⃣ KoinModules.kt
 
@@ -77,23 +77,23 @@ val appModules = listOf(
 )
 ```
 
-**Propósito:** Centralizar todos los módulos de la aplicación
+**Purpose:** Centralize all application modules
 
 ---
 
-## ⚙️ Configuración en Application.kt
+## ⚙️ Configuration in Application.kt
 
 ```kotlin
 fun Application.configureKoin() {
     install(Koin) {
-        slf4jLogger()           // Logger con SLF4J
-        modules(appModules)     // Cargar módulos
+        slf4jLogger()           // Logger with SLF4J
+        modules(appModules)     // Load modules
     }
 }
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
-        configureKoin()         // 1️⃣ Configurar Koin primero
+        configureKoin()         // 1️⃣ Configure Koin first
         configurePlugins()
         configureRouting()
     }.start(wait = true)
@@ -102,32 +102,32 @@ fun main() {
 
 ---
 
-## 💉 Inyección en Rutas
+## 💉 Injection in Routes
 
-### Antes (Manual)
+### Before (Manual)
 
 ```kotlin
 fun Route.taskRoutes(
     getAllTasksUseCase: GetAllTasksUseCase,
     getTaskByIdUseCase: GetTaskByIdUseCase,
-    // ... más parámetros
+    // ... more parameters
 ) {
-    // usar los use cases
+    // use the use cases
 }
 
-// En Application.kt
+// In Application.kt
 taskRoutes(
     DependencyInjection.getAllTasksUseCase,
     DependencyInjection.getTaskByIdUseCase,
-    // ... pasar manualmente
+    // ... pass manually
 )
 ```
 
-### Después (Con Koin) ⭐
+### After (With Koin) ⭐
 
 ```kotlin
 fun Route.taskRoutes() {
-    // Inyección automática con Koin
+    // Automatic injection with Koin
     val getAllTasksUseCase by inject<GetAllTasksUseCase>()
     val getTaskByIdUseCase by inject<GetTaskByIdUseCase>()
     val createTaskUseCase by inject<CreateTaskUseCase>()
@@ -142,40 +142,40 @@ fun Route.taskRoutes() {
     }
 }
 
-// En Application.kt
-taskRoutes()  // ¡Sin parámetros! 🎉
+// In Application.kt
+taskRoutes()  // No parameters! 🎉
 ```
 
-**Ventajas:**
-- ✅ Menos código boilerplate
-- ✅ No pasar dependencias manualmente
-- ✅ Más fácil agregar nuevas dependencias
+**Advantages:**
+- ✅ Less boilerplate code
+- ✅ No manual dependency passing
+- ✅ Easier to add new dependencies
 
 ---
 
-## 🔍 Tipos de Definiciones en Koin
+## 🔍 Definition Types in Koin
 
-| Tipo | Sintaxis | Ciclo de Vida | Uso |
-|------|----------|---------------|-----|
+| Type | Syntax | Lifecycle | Use |
+|------|--------|-----------|-----|
 | **single** | `single { ... }` | Singleton | DataSources, Repositories |
-| **factory** | `factory { ... }` | Nueva instancia | Use Cases, Presenters |
-| **scoped** | `scoped { ... }` | Por scope | Sesiones, Requests |
+| **factory** | `factory { ... }` | New instance | Use Cases, Presenters |
+| **scoped** | `scoped { ... }` | Per scope | Sessions, Requests |
 
-### Ejemplos:
+### Examples:
 
 ```kotlin
 module {
-    // Singleton: Compartido globalmente
+    // Singleton: Shared globally
     single<Database> { DatabaseImpl() }
     
-    // Factory: Nueva instancia cada vez
+    // Factory: New instance each time
     factory<UseCase> { UseCaseImpl(get()) }
     
-    // Named: Para múltiples implementaciones
+    // Named: For multiple implementations
     single<Repository>(named("local")) { LocalRepository() }
     single<Repository>(named("remote")) { RemoteRepository() }
     
-    // Scoped: Por ámbito específico
+    // Scoped: Per specific scope
     scope<UserSession> {
         scoped { UserPreferences() }
     }
@@ -184,7 +184,7 @@ module {
 
 ---
 
-## 🧪 Testing con Koin
+## 🧪 Testing with Koin
 
 ### Test Example
 
@@ -210,7 +210,7 @@ class TaskRepositoryTest : KoinTest {
     }
 }
 
-// Módulo de test
+// Test module
 val testModule = module {
     single<TaskDataSource> { MockTaskDataSource() }
     single<TaskRepository> { TaskRepositoryImpl(get()) }
@@ -219,56 +219,56 @@ val testModule = module {
 
 ---
 
-## 📊 Ventajas vs Desventajas
+## 📊 Advantages vs Disadvantages
 
-### ✅ Ventajas de Koin
+### ✅ Koin Advantages
 
-1. **Simplicidad:** DSL Kotlin limpio y legible
-2. **Sin generación de código:** Runtime DI
-3. **Ligero:** Pequeña footprint
-4. **Fácil debugging:** Errores claros en runtime
-5. **Integración Ktor:** Plugin nativo `koin-ktor`
-6. **Testing friendly:** Fácil crear módulos de test
+1. **Simplicity:** Clean and readable Kotlin DSL
+2. **No code generation:** Runtime DI
+3. **Lightweight:** Small footprint
+4. **Easy debugging:** Clear runtime errors
+5. **Ktor integration:** Native `koin-ktor` plugin
+6. **Testing friendly:** Easy to create test modules
 
-### ⚠️ Consideraciones
+### ⚠️ Considerations
 
-1. **Runtime DI:** Errores en tiempo de ejecución (no compile-time)
-2. **Performance:** Mínimamente más lento que Dagger (compile-time)
-3. **Type-safety:** Menos estricto que Dagger
-
----
-
-## 🆚 Comparación: Koin vs Otros Frameworks
-
-| Característica | Koin | Dagger/Hilt | Manual |
-|----------------|------|-------------|--------|
-| Complejidad | 🟢 Baja | 🔴 Alta | 🟡 Media |
-| Curva Aprendizaje | 🟢 Suave | 🔴 Empinada | 🟢 Ninguna |
-| Performance | 🟡 Buena | 🟢 Excelente | 🟢 Excelente |
-| Compile Safety | 🟡 Runtime | 🟢 Compile-time | 🔴 Ninguna |
-| Boilerplate | 🟢 Mínimo | 🔴 Mucho | 🟡 Medio |
-| Backend (Ktor) | 🟢 Ideal | 🔴 No compatible | 🟢 OK |
-| Android | 🟢 Compatible | 🟢 Nativo | 🟡 Tedioso |
-
-**Veredicto para Ktor Backend:** ✅ **Koin es la mejor opción**
+1. **Runtime DI:** Errors at runtime (not compile-time)
+2. **Performance:** Slightly slower than Dagger (compile-time)
+3. **Type-safety:** Less strict than Dagger
 
 ---
 
-## 🚀 Migrar de Manual a Koin
+## 🆚 Comparison: Koin vs Other Frameworks
 
-### Pasos realizados en este proyecto:
+| Feature | Koin | Dagger/Hilt | Manual |
+|---------|------|-------------|--------|
+| Complexity | 🟢 Low | 🔴 High | 🟡 Medium |
+| Learning Curve | 🟢 Gentle | 🔴 Steep | 🟢 None |
+| Performance | 🟡 Good | 🟢 Excellent | 🟢 Excellent |
+| Compile Safety | 🟡 Runtime | 🟢 Compile-time | 🔴 None |
+| Boilerplate | 🟢 Minimum | 🔴 Much | 🟡 Medium |
+| Backend (Ktor) | 🟢 Ideal | 🔴 Not compatible | 🟢 OK |
+| Android | 🟢 Compatible | 🟢 Native | 🟡 Tedious |
 
-1. ✅ **Agregar dependencias:**
+**Verdict for Ktor Backend:** ✅ **Koin is the best choice**
+
+---
+
+## 🚀 Migrate from Manual to Koin
+
+### Steps performed in this project:
+
+1. ✅ **Add dependencies:**
    ```kotlin
    implementation("io.insert-koin:koin-ktor:3.5.3")
    implementation("io.insert-koin:koin-logger-slf4j:3.5.3")
    ```
 
-2. ✅ **Crear módulos de Koin:**
-   - DataModule: DataSource y Repository
+2. ✅ **Create Koin modules:**
+   - DataModule: DataSource and Repository
    - DomainModule: Use Cases
 
-3. ✅ **Configurar Koin en Application:**
+3. ✅ **Configure Koin in Application:**
    ```kotlin
    install(Koin) {
        slf4jLogger()
@@ -276,16 +276,16 @@ val testModule = module {
    }
    ```
 
-4. ✅ **Refactorizar rutas:**
-   - Usar `inject<T>()` en lugar de parámetros
-   - Eliminar paso manual de dependencias
+4. ✅ **Refactor routes:**
+   - Use `inject<T>()` instead of parameters
+   - Remove manual dependency passing
 
-5. ✅ **Eliminar código manual:**
-   - Borrar `DependencyInjection.kt` object
+5. ✅ **Remove manual code:**
+   - Delete `DependencyInjection.kt` object
 
 ---
 
-## 📖 Recursos y Referencias
+## 📖 Resources and References
 
 - [Koin Documentation](https://insert-koin.io/)
 - [Koin + Ktor Guide](https://insert-koin.io/docs/reference/koin-ktor/ktor/)
@@ -294,29 +294,29 @@ val testModule = module {
 
 ---
 
-## 💡 Próximos Pasos
+## 💡 Next Steps
 
-### Mejoras Sugeridas:
+### Suggested Improvements:
 
-1. **Agregar Tests Unitarios:**
+1. **Add Unit Tests:**
    ```kotlin
    testImplementation("io.insert-koin:koin-test:3.5.3")
    ```
 
-2. **Usar Scopes para diferentes contextos:**
+2. **Use Scopes for different contexts:**
    ```kotlin
    scope<ApiRequest> {
        scoped { RequestContext() }
    }
    ```
 
-3. **Cualificadores para múltiples implementaciones:**
+3. **Qualifiers for multiple implementations:**
    ```kotlin
    single<Cache>(named("memory")) { MemoryCache() }
    single<Cache>(named("disk")) { DiskCache() }
    ```
 
-4. **Profiles para diferentes ambientes:**
+4. **Profiles for different environments:**
    ```kotlin
    val devModule = module { /* ... */ }
    val prodModule = module { /* ... */ }
@@ -328,16 +328,15 @@ val testModule = module {
 
 ## 🎓 Best Practices
 
-1. ✅ **Organizar por capas:** Un módulo por capa (Data, Domain, Presentation)
-2. ✅ **Usar interfaces:** Para mejor abstracción y testing
-3. ✅ **Single para singletons:** Repositories, DataSources, Clients
-4. ✅ **Factory para lógica:** Use Cases, Presenters
-5. ✅ **Nombrar dependencias:** Cuando hay múltiples implementaciones
-6. ✅ **Logs en desarrollo:** `slf4jLogger()` para debug
-7. ✅ **Módulos de test:** Crear módulos separados para testing
+1. ✅ **Organize by layers:** One module per layer (Data, Domain, Presentation)
+2. ✅ **Use interfaces:** For better abstraction and testing
+3. ✅ **Single for singletons:** Repositories, DataSources, Clients
+4. ✅ **Factory for logic:** Use Cases, Presenters
+5. ✅ **Name dependencies:** When there are multiple implementations
+6. ✅ **Logs in development:** `slf4jLogger()` for debugging
+7. ✅ **Test modules:** Create separate modules for testing
 
 ---
 
-**Implementado en:** TaskManager - Ktor Backend con Clean Architecture
-**Versión de Koin:** 3.5.3
-
+**Implemented in:** TaskManager - Ktor Backend with Clean Architecture
+**Koin Version:** 3.5.3

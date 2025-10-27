@@ -1,26 +1,31 @@
-# 🚀 Configuración de GitHub - TaskManager
+# 🚀 GitHub Setup - TaskManager
 
-## ✅ Repositorio Creado Exitosamente
+## ✅ Repository Successfully Created
 
-**URL del Repositorio:** https://github.com/luisiscander/TaskManager
+**Repository URL:** https://github.com/luisiscander/TaskManager
 
 ---
 
-## 📊 Información del Repositorio
+## 📊 Repository Information
 
-| Detalle | Valor |
-|---------|-------|
+| Detail | Value |
+|--------|-------|
 | **Owner** | luisiscander |
-| **Nombre** | TaskManager |
-| **Visibilidad** | Público |
-| **Descripción** | Task Manager API REST construida con Ktor Server, Clean Architecture y Koin DI |
-| **Branch Principal** | main |
+| **Name** | TaskManager |
+| **Visibility** | Public |
+| **Description** | Task Manager REST API built with Ktor Server, Clean Architecture and Koin DI |
+| **Main Branch** | main |
 
 ---
 
-## 📦 Commits Subidos
+## 📦 Uploaded Commits
 
 ```
+3df5ded docs: Translate documentation files to English
+a99b964 chore: Clean up deleted documentation files and code changes
+0799583 chore: Remove Cursor-related files and update .gitignore
+672ba8f docs: Update README to English and remove acknowledgements section
+fa53f4d docs: Add GitHub setup documentation
 28f9b75 docs: Add MIT License
 0437607 docs: Update README.md with comprehensive project documentation
 1cdb8f6 docs: Add migration summary from manual DI to Koin
@@ -30,38 +35,34 @@ a0d1528 docs: Add compilation guide for different project types
 73cb759 Initial commit: TaskManager - CRUD REST API with Ktor and Clean Architecture
 ```
 
-**Total:** 7 commits
-
 ---
 
-## 📚 Archivos Incluidos
+## 📚 Included Files
 
-### Código Fuente
-- ✅ Estructura completa del proyecto Ktor
+### Source Code
+- ✅ Complete Ktor project structure
 - ✅ Clean Architecture (Data, Domain, Presentation)
-- ✅ Inyección de dependencias con Koin
-- ✅ API REST completa (CRUD de tareas)
+- ✅ Dependency injection with Koin
+- ✅ Complete REST API (Task CRUD)
 
-### Documentación
-- ✅ `README.md` - Documentación principal con badges
-- ✅ `API_EXAMPLES.md` - Ejemplos de uso de la API
-- ✅ `ARCHITECTURE.md` - Detalles de arquitectura
-- ✅ `KOIN_DI.md` - Guía de Koin
-- ✅ `MIGRATION_SUMMARY.md` - Resumen de migración
-- ✅ `COMPILE_GUIDE.md` - Guía de compilación
-- ✅ `COMPILE_COMMANDS.md` - Referencia rápida
+### Documentation
+- ✅ `README.md` - Main documentation with badges
+- ✅ `API_EXAMPLES.md` - API usage examples
+- ✅ `ARCHITECTURE.md` - Architecture details
+- ✅ `KOIN_DI.md` - Koin guide
+- ✅ `COMPILE_COMMANDS.md` - Quick reference
 
-### Configuración
-- ✅ `LICENSE` - Licencia MIT
-- ✅ `.gitignore` - Ignorar archivos innecesarios
-- ✅ `build.gradle.kts` - Configuración Gradle
-- ✅ `auto-compile.sh` - Script de compilación automática
+### Configuration
+- ✅ `LICENSE` - MIT License
+- ✅ `.gitignore` - Ignore unnecessary files
+- ✅ `build.gradle.kts` - Gradle configuration
+- ✅ `auto-compile.sh` - Auto-compilation script
 
 ---
 
-## 🔧 Configuración Local
+## 🔧 Local Configuration
 
-### Remote de Git
+### Git Remote
 ```bash
 origin  https://github.com/luisiscander/TaskManager.git (fetch)
 origin  https://github.com/luisiscander/TaskManager.git (push)
@@ -74,145 +75,138 @@ branch 'main' set up to track 'origin/main'
 
 ---
 
-## 🎯 Próximos Pasos
+## 🎯 Next Steps
 
-### 1. GitHub Actions (Opcional)
+### 1. GitHub Actions (Optional)
 
-El archivo `.github/workflows/build.yml` está disponible localmente pero requiere permisos adicionales.
+The `.github/workflows/build.yml` file is available locally but requires additional permissions.
 
-**Opción A: Agregar manualmente en GitHub**
-1. Ve a https://github.com/luisiscander/TaskManager
-2. Crea el archivo `.github/workflows/build.yml`
-3. Copia el contenido del archivo local
+**Option A: Add manually on GitHub**
+1. Go to https://github.com/luisiscander/TaskManager
+2. Create file `.github/workflows/build.yml`
+3. Copy content from local file
 
-**Opción B: Reautenticar con permisos workflow**
+**Option B: Re-authenticate with workflow permissions**
 ```bash
 gh auth refresh -h github.com -s workflow
 git push
 ```
 
-### 2. Configurar GitHub Pages (Opcional)
-```bash
-# Desde GitHub:
-Settings > Pages > Source: main branch
-```
-
-### 3. Agregar Topics al Repositorio
+### 2. Add Topics to Repository
 ```bash
 gh repo edit --add-topic kotlin --add-topic ktor --add-topic clean-architecture --add-topic koin --add-topic rest-api
 ```
 
-### 4. Configurar Issues y Projects
+### 3. Configure Issues and Projects
 ```bash
-# Habilitar Issues
+# Enable Issues
 gh repo edit --enable-issues
 
-# Habilitar Discussions
+# Enable Discussions
 gh repo edit --enable-discussions
 ```
 
 ---
 
-## 🌟 Características del README
+## 🌟 README Features
 
-El README incluye:
-- ✅ Badges de Kotlin, Ktor, Koin y License
-- ✅ Descripción de Clean Architecture
-- ✅ Tabla de tecnologías
-- ✅ Endpoints de API
-- ✅ Instrucciones de instalación
-- ✅ Ejemplos de uso con curl
-- ✅ Estructura del proyecto
-- ✅ Links a toda la documentación
-- ✅ Roadmap de futuras features
-- ✅ Guía de contribución
+The README includes:
+- ✅ Badges for Kotlin, Ktor, Koin and License
+- ✅ Clean Architecture description
+- ✅ Technology table
+- ✅ API endpoints
+- ✅ Installation instructions
+- ✅ Usage examples with curl
+- ✅ Project structure
+- ✅ Links to all documentation
+- ✅ Roadmap for future features
+- ✅ Contribution guide
 
 ---
 
-## 📱 Compartir el Proyecto
+## 📱 Share the Project
 
-### Clonar el Repositorio
+### Clone the Repository
 ```bash
 git clone https://github.com/luisiscander/TaskManager.git
 cd TaskManager
 ./gradlew run
 ```
 
-### URL Directa
+### Direct URL
 ```
 https://github.com/luisiscander/TaskManager
 ```
 
-### Badge Markdown
+### Markdown Badge
 ```markdown
 [![TaskManager](https://img.shields.io/badge/Project-TaskManager-blue.svg)](https://github.com/luisiscander/TaskManager)
 ```
 
 ---
 
-## 🔐 Seguridad
+## 🔐 Security
 
 ### GitHub Token
-Tu token actual tiene los siguientes scopes:
+Your current token has the following scopes:
 - ✅ `gist`
 - ✅ `read:org`
 - ✅ `repo`
-- ❌ `workflow` (necesario para GitHub Actions)
+- ❌ `workflow` (needed for GitHub Actions)
 
-Para agregar el scope workflow:
+To add workflow scope:
 ```bash
 gh auth refresh -h github.com -s workflow
 ```
 
 ---
 
-## 📊 Estadísticas del Proyecto
+## 📊 Project Statistics
 
-| Métrica | Valor |
-|---------|-------|
-| **Commits** | 7 |
-| **Archivos** | 30+ |
-| **Líneas de Código** | ~1,800 |
-| **Documentación** | 8 archivos MD (43K) |
-| **Lenguaje** | Kotlin 100% |
+| Metric | Value |
+|--------|-------|
+| **Commits** | 12+ |
+| **Files** | 30+ |
+| **Lines of Code** | ~2,000 |
+| **Documentation** | 6 MD files (35K+) |
+| **Language** | Kotlin 100% |
 
 ---
 
-## 🎉 Éxito!
+## 🎉 Success!
 
-Tu proyecto **TaskManager** está ahora disponible públicamente en GitHub:
+Your **TaskManager** project is now publicly available on GitHub:
 
 🔗 **https://github.com/luisiscander/TaskManager**
 
-¡Felicidades! 🎊
+Congratulations! 🎊
 
 ---
 
-## 📞 Comandos Útiles
+## 📞 Useful Commands
 
 ```bash
-# Ver información del repo
+# View repo information
 gh repo view
 
-# Abrir en el navegador
+# Open in browser
 gh repo view --web
 
-# Ver issues
+# View issues
 gh issue list
 
-# Crear un nuevo issue
+# Create a new issue
 gh issue create
 
-# Ver pull requests
+# View pull requests
 gh pr list
 
-# Clonar en otra máquina
+# Clone on another machine
 git clone https://github.com/luisiscander/TaskManager.git
 ```
 
 ---
 
-**Creado:** Octubre 2025
-**Usuario:** luisiscander
-**Herramienta:** GitHub CLI (gh)
-
+**Created:** October 2025
+**User:** luisiscander
+**Tool:** GitHub CLI (gh)
